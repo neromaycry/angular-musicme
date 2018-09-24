@@ -1,0 +1,26 @@
+<div class="player-container">
+    <div class="music-info-container">
+        <div class="music-info-container-inner">
+            <div class="music-artist">{{artist}}</div>
+            <div class="music-album">{{album}}</div>
+        </div>
+    </div>
+    <div class="music-control-container">
+        <div class="music-name">{{name}}</div>
+        <div class="music-schedule-container">
+            <div class="music-progress-text">{{currentTimeText}}</div>
+            <div class="divider">/</div>
+            <div class="music-duration-text">{{durationText}}</div>
+        </div>
+        <div class="music-pic-container">
+            <round-progress [current]="progress" [max]="duration"></round-progress>
+            <div class="{{ playing ? 'music-pic animate' : 'music-pic'}}"></div>
+            <div class="btn-control" (click)="handlePlaying()">
+                <div class="{{ playing ? 'btn-control-img pause' : 'btn-control-img play'}}"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <audio id="player">
+    <source id="source" src="D:/VScodeProjects/musicme-server/musicdata/LostStars.mp3"/>
+</audio> -->

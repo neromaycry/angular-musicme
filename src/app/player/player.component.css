@@ -1,0 +1,174 @@
+.player-container {
+    width: 100%;
+    height: 100%;
+}
+
+.music-info-container {
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    filter: drop-shadow(0 1px 2px #293939);   
+    z-index: 9;
+}
+
+.music-info-container-inner {
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 240px;
+    background-color: #018FA6;
+    z-index: 10;
+    -webkit-clip-path: polygon(0 0, 100% 0%, 100% 92%, 0 100%);
+    clip-path: polygon(0 0, 100% 0%, 100% 92%, 0 100%);
+}
+
+.music-artist {
+    color: #FFF;
+    font-weight: bold;
+    font-size: 32px;
+    margin-top: 110px;
+    margin-left: 24px;
+    opacity: 0.8;
+}
+
+.music-album {
+    color: #FFF;
+    font-family: 'less light';    
+    font-size: 26px;
+    margin-left: 24px;
+    opacity: 0.7;
+}
+
+.music-control-container {
+    position: absolute;
+    bottom:0;
+    left: 0;
+    width: 100%;
+    height: 516px;
+    background: radial-gradient(at 0px 0px, #65737A, #213131);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+
+.music-name {
+    color: #008095;
+    font-family: 'less light';  
+    text-align: right;
+    font-size: 26px;
+    margin: 80px 16px 0 0;
+}
+
+.music-schedule-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 26px;
+    font-family: 'less light';  
+    margin: 0 16px 0 0;
+}
+
+.music-progress-text {
+    color: #008095;
+}
+
+.divider {
+    color: #95AAB0;
+    margin: 0 4px;
+}
+
+.music-duration-text {
+    color: #95AAB0;
+    font-family: 'less light';  
+}
+
+.music-pic-container {
+    position: relative;
+    width: 280px;
+    height: 280px;
+    margin: 16px 16px 0 0;
+}
+
+.music-progress {
+    width: 280px;
+    height: 280px;
+    border-radius: 140px;
+    background-color: #95AAB0;
+    opacity: 0.5;
+}
+
+.music-pic {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    width: 240px;
+    height: 240px;
+    border-radius: 120px;
+    background-image: url('../../assets/imgs/WonderfulU.jpg');
+    background-size: cover;
+    box-shadow: 0px 0px 10px #293939;
+    z-index: 2;
+}
+
+.animate {
+    animation: 10s linear 0s normal none infinite rotate;
+    -webkit-animation: 10s linear 0s normal none infinite rotate;
+}
+
+.btn-control {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    background-color: #4A6B7B;
+    box-shadow: 0px 0px 8px #293939;
+    z-index: 3;
+}
+
+.btn-control-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    z-index: 4;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.play {
+    background-image: url('../../assets/imgs/play.svg');
+}
+
+.pause {
+    background-image: url('../../assets/imgs/pause.svg');
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes rotate {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}

@@ -35,10 +35,13 @@ export class MusicService {
                 this._audio.currentTime = this.playData.currentTime;
             }
             this.listenInterval = setInterval(() => {
-                that.playData.currentTime = Math.ceil(that._audio.currentTime);
-                that.playData.duration = Math.ceil(that._audio.duration);
-                console.log(this.playData);
-                that.store.dispatch(new fromActions.SetPlayProgressAction(that.playData));
+                console.log(that._audio.currentTime, that._audio.duration);
+                if (that._audio.duration != NaN) {
+                    that.playData.currentTime = Math.ceil(that._audio.currentTime);
+                    that.playData.duration = Math.ceil(that._audio.duration);
+                    // console.log(this.playData);
+                    that.store.dispatch(new fromActions.SetPlayProgressAction(that.playData));
+                }
             }, 1000);
         }
         this._audio.onpause = () => {
@@ -48,16 +51,24 @@ export class MusicService {
         }
         this._audio.onended = () => {
             console.log('onended');
+            this._audio.currentTime = 0;
+            this._audio.pause();
             if (this.playList.length > this.playData.playIndex) {
                 this.playData.playIndex++;
+                this.playData.currentTime = 0;
                 this.playData.isPlaying = false;
                 this.toggle(this.playData.playIndex);
             } else {
                 this.playData.playIndex = 0;
+                this.playData.currentTime = 0;
                 this.playData.isPlaying = false;
                 this.toggle(this.playData.playIndex);
             }
         }
+
+        this._audio.oncanplay = () =>{
+            console.log('canplay');
+        } 
 
     }
 
@@ -65,15 +76,69 @@ export class MusicService {
         let music: Music = this.playList[index];
         this._audio.src = music.songUrl;
         if (!this.playData.isPlaying) {
-            this._audio.play();
+            this._audio.load();
+            let loadInterval = setInterval(() => {
+                console.log('readyState:', this._audio.readyState);
+                if (this._audio.readyState > 1) {
+                    this._audio.play();
+                    clearInterval(loadInterval);
+                }
+            }, 500);
             this.playData.isPlaying = true;
             this.playData.name = music.name;
             this.playData.artist = music.artist;
             this.playData.album = music.album;
+            this.playData.coverUrl = music.coverUrl;
             this.store.dispatch(new fromActions.SetPlayInfoAction(this.playData));
         } else {
             this._audio.pause();
             this.playData.isPlaying = false;
+            clearInterval(this.listenInterval);
+        }
+    }
+
+    pre() {
+        this.playData.playIndex = this.playData.playIndex > 0 ? (this.playData.playIndex - 1) : (this.playList.length - 1);
+        let music: Music = this.playList[this.playData.playIndex];
+        this._audio.src = music.songUrl;
+        this.playData.name = music.name;
+        this.playData.artist = music.artist;
+        this.playData.album = music.album;
+        this.playData.currentTime = Math.ceil(this._audio.currentTime);
+        this.playData.coverUrl = music.coverUrl;
+        this.store.dispatch(new fromActions.SetPlayInfoAction(this.playData));
+        this.store.dispatch(new fromActions.SetPlayIndexAction(this.playData.playIndex));
+        let loadInterval = setInterval(() => {
+            console.log('readyState:', this._audio.readyState);
+            if (this._audio.readyState > 1) {
+                this._audio.play();
+                clearInterval(loadInterval);
+            }
+        }, 500);
+        if (this.listenInterval) {
+            clearInterval(this.listenInterval);
+        }
+    }
+
+    next() {
+        this.playData.playIndex = this.playData.playIndex < (this.playList.length - 1) ? (this.playData.playIndex + 1) : 0;
+        let music: Music = this.playList[this.playData.playIndex];
+        this._audio.src = music.songUrl;
+        this.playData.name = music.name;
+        this.playData.artist = music.artist;
+        this.playData.album = music.album;
+        this.playData.coverUrl = music.coverUrl;
+        this.playData.currentTime = Math.ceil(this._audio.currentTime);
+        this.store.dispatch(new fromActions.SetPlayInfoAction(this.playData));
+        this.store.dispatch(new fromActions.SetPlayIndexAction(this.playData.playIndex));
+        let loadInterval = setInterval(() => {
+            console.log('readyState:', this._audio.readyState);
+            if (this._audio.readyState > 1) {
+                this._audio.play();
+                clearInterval(loadInterval);
+            }
+        }, 500);
+        if (this.listenInterval) {
             clearInterval(this.listenInterval);
         }
     }
@@ -86,10 +151,17 @@ export class MusicService {
                     // console.log(response);
                     this.playList = response.data;
                     this.store.dispatch(new fromActions.LoadPlaylistAction(response.data));
-                    // console.log(this.playList);
+                    let music: Music = this.playList[this.playData.playIndex];
+                    this.playData.name = music.name;
+                    this.playData.artist = music.artist;
+                    this.playData.album = music.album;
+                    this.playData.coverUrl = music.coverUrl;
+                    // alert(JSON.stringify(this.playData));
+                    this.store.dispatch(new fromActions.SetPlayInfoAction(this.playData));
                 },
                 error => {
                     console.log(error);
+                    // alert(JSON.stringify(error));
                 }
             );
     }

@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "prefixcss": "postcss -s postcss-scss -u autoprefixer --autoprefixer.browsers \"last 2 versions\" -r src/**/*.scss"
   },
   "private": true,
   "dependencies": {
@@ -23,6 +24,8 @@
     "@ngrx/store": "^6.1.0",
     "angular-svg-round-progressbar": "^2.0.0",
     "core-js": "^2.5.4",
+    "hammerjs": "^2.0.8",
+    "node-sass": "^4.9.3",
     "rxjs": "~6.2.0",
     "zone.js": "~0.8.26"
   },
@@ -34,7 +37,9 @@
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
+    "autoprefixer": "^9.1.5",
     "codelyzer": "~4.3.0",
+    "cssnano": "^4.1.3",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~3.0.0",
@@ -42,7 +47,18 @@
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "postcss": "^7.0.2",
+    "postcss-aspect-ratio-mini": "0.0.2",
+    "postcss-cli": "^6.0.0",
+    "postcss-cssnext": "^3.1.0",
+    "postcss-import": "^12.0.0",
+    "postcss-px-to-viewport": "0.0.3",
+    "postcss-scss": "^2.0.0",
+    "postcss-url": "^8.0.0",
+    "postcss-viewport-units": "^0.1.4",
+    "postcss-write-svg": "^3.0.1",
     "protractor": "~5.4.0",
+    "sass-loader": "^7.1.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
     "typescript": "~2.9.2"

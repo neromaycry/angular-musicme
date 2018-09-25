@@ -6,6 +6,7 @@ export class PlayData {
     duration: number;
     isPlaying: boolean;
     playIndex: number;
+    coverUrl: string;
 }
 
 export const initialPlayData: PlayData = {
@@ -15,5 +16,6 @@ export const initialPlayData: PlayData = {
     currentTime: 0,
     duration: 0,
     isPlaying: false,
-    playIndex: 0
+    playIndex: 0,
+    coverUrl: '../../assets/imgs/album.svg'
 }

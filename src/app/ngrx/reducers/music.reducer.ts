@@ -1,6 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import * as fromActions from '../actions/music.action';
 import { MusicState } from '../app.states';
+import { DEFAULT_ALBUM_COVER_URL } from '../../common/consts';
 
 export const initialState: MusicState = {
     playlist: [],
@@ -9,7 +10,8 @@ export const initialState: MusicState = {
     playIndex: 0,
     name: 'Unknown',
     artist: 'Artist',
-    album: 'Album'
+    album: 'Album',
+    coverUrl: DEFAULT_ALBUM_COVER_URL
 };
 
 export function reducer(state = initialState, action: fromActions.All): MusicState {
@@ -34,7 +36,8 @@ export function reducer(state = initialState, action: fromActions.All): MusicSta
             return Object.assign({}, state, {
                 name: action.payload.name,
                 artist: action.payload.artist,
-                album: action.payload.album
+                album: action.payload.album,
+                coverUrl: action.payload.coverUrl
             });
         }
         default: {
@@ -57,6 +60,7 @@ export const getPlayInfo = createSelector(getPlaylistState, (state: MusicState) 
     return {
         name: state.name,
         artist: state.artist,
-        album: state.album
+        album: state.album,
+        coverUrl: state.coverUrl
     }
 });

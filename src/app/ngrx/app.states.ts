@@ -12,4 +12,5 @@ export interface MusicState {
     name: string;
     artist: string;
     album: string;
+    coverUrl: string;
 }

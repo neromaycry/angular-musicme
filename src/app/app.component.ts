@@ -1,10 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
   title = 'angular-musicme';
+
+  ngAfterViewInit() {
+    // this.getScreenInfo();
+  }
+
+  getScreenInfo() {
+    alert(document.body.clientHeight);
+  }
+
 }

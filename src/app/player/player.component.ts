@@ -5,11 +5,12 @@ import { MusicService } from '../services/music.service';
 import { Observable } from 'rxjs';
 import { MusicState } from '../ngrx/app.states';
 import * as musicReducer from '../ngrx/reducers/music.reducer';
+import { DEFAULT_ALBUM_COVER_URL } from '../common/consts';
 
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
-  styleUrls: ['./player.component.css']
+  styleUrls: ['./player.component.scss']
 })
 export class PlayerComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -24,6 +25,7 @@ export class PlayerComponent implements OnInit, AfterViewInit, OnDestroy {
   name = 'Unknown';
   artist = 'Unknown';
   album = 'Unknown';
+  cover = DEFAULT_ALBUM_COVER_URL;
 
   constructor(
     private musicService: MusicService,
@@ -45,23 +47,22 @@ export class PlayerComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     this.store.select(musicReducer.getPlayProgress).subscribe((data) => {
-      console.log(data);
+      // console.log(data);
       this.progress = data.currentTime;
       this.duration = data.duration == 0 ? 1 : data.duration;
       this.currentTimeText = this.formatTime(data.currentTime);
       this.durationText = this.formatTime(data.duration);
     });
 
-    this.store.select(musicReducer.getPlayInfo).subscribe((info)=>{
+    this.store.select(musicReducer.getPlayInfo).subscribe((info) => {
       this.name = info.name;
       this.artist = info.artist;
       this.album = info.album;
+      this.cover = info.coverUrl == DEFAULT_ALBUM_COVER_URL ? info.coverUrl : `url(${info.coverUrl})`;
     });
   }
 
   ngAfterViewInit() {
-    // let audio: any = document.getElementById('player');
-    // audio.play();
   }
 
   ngOnDestroy() {
@@ -74,6 +75,20 @@ export class PlayerComponent implements OnInit, AfterViewInit, OnDestroy {
     this.musicService.toggle(this.playIndex);
 
   }
+
+  pre() {
+    console.log('play pre song');
+    this.musicService.pre();
+  }
+
+  next() {
+    console.log('play next song');
+    this.musicService.next();
+  }
+
+  // panRight() {
+  //   console.log('pan right');
+  // }
 
   formatTime(seconds: any) {
     var min: any = Math.floor(seconds / 60),
